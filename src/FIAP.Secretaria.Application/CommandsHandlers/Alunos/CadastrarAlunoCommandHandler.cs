@@ -46,7 +46,7 @@ public class CadastrarAlunoCommandHandler : IRequestHandler<CadastrarAlunoComman
                 {
                     var senhaHash = _passwordHasher.HashPassword(command.Senha);
 
-                    var aluno = Domain.Entities.Aluno.Factory.Criar(command.Nome, command.DataNascimento, command.Cpf, command.Email, senhaHash);
+                    var aluno = Domain.Entities.Aluno.Factory.Criar(command.Nome, command.DataNascimento, cpf, command.Email, senhaHash);
 
                     await _alunoRepository.AddAsync(aluno);
                     await _alunoRepository.UnitOfWork.CommitAsync();

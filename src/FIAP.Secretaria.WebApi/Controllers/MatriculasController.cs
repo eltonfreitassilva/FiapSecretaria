@@ -7,6 +7,7 @@ using FIAP.Secretaria.Shared.Common.Results;
 using FIAP.Secretaria.Shared.Common.Validators;
 using FIAP.Secretaria.Shared.Utils.Pagination;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -15,6 +16,7 @@ namespace FIAP.Secretaria.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize(Roles = $"Administrador")]
     public class MatriculasController : DefaultController
     {
         private readonly IConsultarMatriculasQuery _consultarMatriculasQuery;

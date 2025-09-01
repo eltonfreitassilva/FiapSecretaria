@@ -42,6 +42,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IConsultarTurmasQuery, ConsultarTurmasQuery>();
         services.AddScoped<IConsultarAlunosQuery, ConsultarAlunosQuery>();
         services.AddScoped<IConsultarMatriculasQuery, ConsultarMatriculasQuery>();
+        services.AddScoped<IObterTurmaComAlunosQuery, ObterTurmaComAlunosQuery>();
+        services.AddScoped<IAlunosPorTumaQuery, AlunosPorTumaQuery>();
 
         return services;
     }

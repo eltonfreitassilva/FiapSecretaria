@@ -1,8 +1,6 @@
 ﻿using FIAP.Secretaria.Application.Commands.Turmas;
 using FIAP.Secretaria.Application.Dtos;
-using FIAP.Secretaria.Application.Filters;
 using FIAP.Secretaria.Application.Filters.Turmas;
-using FIAP.Secretaria.Application.Queries;
 using FIAP.Secretaria.Application.Queries.Turmas;
 using FIAP.Secretaria.Shared.Common.Data;
 using FIAP.Secretaria.Shared.Common.Enums;
@@ -10,6 +8,7 @@ using FIAP.Secretaria.Shared.Common.Results;
 using FIAP.Secretaria.Shared.Common.Validators;
 using FIAP.Secretaria.Shared.Utils.Pagination;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
@@ -18,13 +17,18 @@ namespace FIAP.Secretaria.WebApi.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
+    [Authorize(Roles = $"Administrador")]
     public class TurmasController : DefaultController
     {
          private readonly IConsultarTurmasQuery _consultarTurmasQuery;
+         private readonly IObterTurmaComAlunosQuery _obterTurmaComAlunosQuery;
+         private readonly IAlunosPorTumaQuery _alunosPorTumaQuery;
 
-        public TurmasController(IMediator mediator, IConsultarTurmasQuery consultarTurmasQuery) : base(mediator)
+        public TurmasController(IMediator mediator, IConsultarTurmasQuery consultarTurmasQuery, IObterTurmaComAlunosQuery obterTurmaComAlunosQuery, IAlunosPorTumaQuery alunosPorTumaQuery) : base(mediator)
         {
             _consultarTurmasQuery = consultarTurmasQuery;
+            _obterTurmaComAlunosQuery = obterTurmaComAlunosQuery;
+            _alunosPorTumaQuery = alunosPorTumaQuery;
         }
 
         [HttpPost]
@@ -84,6 +88,31 @@ namespace FIAP.Secretaria.WebApi.Controllers
             filtros.Pagination = paginacao;
 
             var result = await _consultarTurmasQuery.Handle(filtros);
+            return GetIActionResult(result);
+        }
+
+        [HttpGet("{idTurma:int}/Alunos")]
+        [SwaggerOperation(summary: "Listar turmas e seus alunos", description: "Permite listar turmas e seus alunos.")]
+        [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Result<Result<IPagedList<AlunoTurmaDto>>>))]
+        public async Task<IActionResult> ListarTurmasESeusAlunos([FromRoute] int idTurma, [FromQuery] PaginationFilter paginacao)
+        {
+            var result = new Result<IPagedList<AlunoTurmaDto>>();
+
+            Validations.IsTrue(idTurma <= 0, result, "Turma", "Id inválido.");
+
+            if (!result.IsValid) return GetIActionResult(result);
+
+            var filtros = new AlunosPorTumaFilter { Id = idTurma };
+
+            if (paginacao == null)
+                paginacao = new PaginationFilter();
+
+            paginacao.SortIndex = 0;
+            paginacao.SortDirection = SortDirection.Ascending;
+            filtros.Pagination = paginacao;
+
+            result = await _alunosPorTumaQuery.Handle(filtros);
+
             return GetIActionResult(result);
         }
     }

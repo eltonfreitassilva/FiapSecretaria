@@ -10,18 +10,20 @@ using System.Linq.Expressions;
 
 namespace FIAP.Secretaria.Application.Queries.Turmas;
 
-public class ConsultarTurmasQuery : IConsultarTurmasQuery
+public class AlunosPorTumaQuery : IAlunosPorTumaQuery
 {
     private readonly ITurmaRepository _turmaRepository;
+    private readonly IMatriculaRepository _matriculaRepository;
 
-    public ConsultarTurmasQuery(ITurmaRepository turmaRepository)
+    public AlunosPorTumaQuery(ITurmaRepository turmaRepository, IMatriculaRepository matriculaRepository)
     {
         _turmaRepository = turmaRepository;
+        _matriculaRepository = matriculaRepository;
     }
 
-    public async Task<Result<IPagedList<TurmaDto>>> Handle(ConsultarTurmasFilter filter, CancellationToken cancellationToken)
+    public async Task<Result<IPagedList<AlunoTurmaDto>>> Handle(AlunosPorTumaFilter filter, CancellationToken cancellationToken = default)
     {
-        var result = new Result<IPagedList<TurmaDto>>();
+        var result = new Result<IPagedList<AlunoTurmaDto>>();
 
         filter.Validate(result);
 
@@ -29,27 +31,32 @@ public class ConsultarTurmasQuery : IConsultarTurmasQuery
         {
             var filtrosConfigurados = ConfigurarFiltros(filter);
 
-            var dadosPaginados = await _turmaRepository.GetPagedList(filtrosConfigurados);
+            var dadosPaginados = await _matriculaRepository.GetPagedList(filtrosConfigurados);
 
             var dados = dadosPaginados
                 .Items
-                .Select(x => (TurmaDto)x)
+                .Select(x => (AlunoTurmaDto)x)
                 .ToList();
 
-            result.Data = new PagedList<TurmaDto>(dados, dadosPaginados.Page, dadosPaginados.TotalItems, dadosPaginados.ItemsPerPage);
+            result.Data = new PagedList<AlunoTurmaDto>(dados, dadosPaginados.Page, dadosPaginados.TotalItems, dadosPaginados.ItemsPerPage);
         }
 
         return result;
     }
 
-    private DataFilter<Turma> ConfigurarFiltros(ConsultarTurmasFilter filter)
+    private DataFilter<Matricula> ConfigurarFiltros(AlunosPorTumaFilter filter)
     {
-        DataFilter<Turma> filtros = new DataFilter<Turma>();
+        DataFilter<Matricula> filtros = new DataFilter<Matricula>();
         filtros.PageIndex = filter.Pagination.PageIndex;
         filtros.PageSize = filter.Pagination.PageSize;
         filtros.SortDirection = SortDirection.Ascending;
-        filtros.SortColumn = c => c.Nome;
+        filtros.SortColumn = c => c.Aluno.Nome;
         filtros.Predicate = PrepararConsulta(filter);
+
+        filtros.Includes =
+                    [
+                          t => t.Aluno
+                    ];
 
         if (filter.Pagination.SortIndex >= 0)
         {
@@ -57,29 +64,21 @@ public class ConsultarTurmasQuery : IConsultarTurmasQuery
 
             if (filter.Pagination.SortIndex == 0)
             {
-                filtros.SortColumn = c => c.Nome;
-            }
-            else if (filter.Pagination.SortIndex == 1)
-            {
-                filtros.SortColumn = c => c.DataCriacao;
+                filtros.SortColumn = c => c.Aluno.Nome;
             }
         }
 
         return filtros;
     }
 
-    private Expression<Func<Turma, bool>> PrepararConsulta(ConsultarTurmasFilter filter)
+    private Expression<Func<Matricula, bool>> PrepararConsulta(AlunosPorTumaFilter filter)
     {
         if (filter == null)
             return default;
 
-        Expression<Func<Turma, bool>> consulta = c =>
+        Expression<Func<Matricula, bool>> consulta = c =>
 
-            (filter.Id == null || c.Id == filter.Id) &&
-            (string.IsNullOrEmpty(filter.Nome) || c.Nome.Contains(filter.Nome)) &&
-            (string.IsNullOrEmpty(filter.Descricao) || c.Descricao.Contains(filter.Descricao))
-
-        ;
+            (filter.Id == null || c.TurmaId == filter.Id);
 
         return consulta;
     }

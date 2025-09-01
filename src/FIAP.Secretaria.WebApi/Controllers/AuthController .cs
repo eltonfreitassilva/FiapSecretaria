@@ -3,7 +3,6 @@ using FIAP.Secretaria.Shared.Common.Models;
 using FIAP.Secretaria.Shared.Common.Results;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Net;

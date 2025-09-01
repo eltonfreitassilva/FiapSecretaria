@@ -69,15 +69,8 @@ public class ConsultarAlunosQuery : IConsultarAlunosQuery
             return default;
 
         Expression<Func<Aluno, bool>> consulta = c =>
-
-                filter.Id == null ||
-
-                    filter.Id != null &&
-
-                        c.Id == filter.Id
-
-
-            ;
+            (filter.Id == null || c.Id == filter.Id) &&
+            (string.IsNullOrEmpty(filter.Nome) || c.Nome.ToLower().Contains(filter.Nome.ToLower()));
 
         return consulta;
     }
