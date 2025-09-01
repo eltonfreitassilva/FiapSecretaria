@@ -1,4 +1,10 @@
-﻿using FluentValidation;
+﻿using FIAP.Secretaria.Application.Commands;
+using FIAP.Secretaria.Application.Commands.Alunos;
+using FIAP.Secretaria.Application.CommandsHandlers;
+using FIAP.Secretaria.Shared.Common.Models;
+using FIAP.Secretaria.Shared.Common.Results;
+using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -20,7 +26,10 @@ public static class ServiceCollectionExtensions
         });
 
         //Commands
-
+        services.AddScoped<IRequestHandler<LoginCommand, Result<LoginResponseModel>>, LoginCommandHandler>();
+        services.AddScoped<IRequestHandler<CadastrarAlunoCommand, Result<bool>>, CadastrarAlunoCommandHandler>();
+        services.AddScoped<IRequestHandler<EditarAlunoCommand, Result<bool>>, EditarAlunoCommandHandler>();
+        services.AddScoped<IRequestHandler<DeletarAlunoCommand, Result<bool>>, DeletarAlunoCommandHandler>();
 
         //Queries
 

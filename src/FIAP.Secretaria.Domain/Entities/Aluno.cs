@@ -11,8 +11,19 @@ public class Aluno : Entity
     public string Cpf { get; private set; }
     public string Email { get; private set; }
     public string Senha { get; private set; }
+    public DateTime DataCriacao { get; private set; }
+    public DateTime? DataAlteracao { get; private set; }
 
     public virtual ICollection<Matricula> Matriculas { get; private set; }
+
+    public void Atualizar(string nome, DateTime dataNascimento, string cpf, string email)
+    {
+        Nome = nome;
+        DataNascimento = dataNascimento;
+        Cpf = cpf;
+        Email = email;
+        DataAlteracao = DateTime.Now;
+    }
 
     public static class Factory
     {
@@ -24,7 +35,8 @@ public class Aluno : Entity
                 DataNascimento = dataNascimento,
                 Cpf = cpf,
                 Email = email,
-                Senha = senhaHash
+                Senha = senhaHash,
+                DataCriacao = DateTime.Now
             };
 
             return aluno;

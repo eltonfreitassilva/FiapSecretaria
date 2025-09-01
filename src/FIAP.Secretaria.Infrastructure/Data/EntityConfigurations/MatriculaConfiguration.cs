@@ -12,13 +12,20 @@ public class MatriculaConfiguration : IEntityTypeConfiguration<Matricula>
 
         builder.HasKey(m => m.Id);
 
+        builder.Property(c => c.Id)
+            .HasColumnName("Id")
+            .IsRequired();
+
         builder.Property(m => m.AlunoId)
+            .HasColumnName("AlunoId")
             .IsRequired();
 
         builder.Property(m => m.TurmaId)
+            .HasColumnName("TurmaId")
             .IsRequired();
 
         builder.Property(m => m.DataMatricula)
+            .HasColumnName("DataMatricula")
             .IsRequired();
 
         builder.HasIndex(m => new { m.AlunoId, m.TurmaId })

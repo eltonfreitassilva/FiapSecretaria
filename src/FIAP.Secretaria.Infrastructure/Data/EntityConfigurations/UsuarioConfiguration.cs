@@ -12,15 +12,27 @@ public class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 
         builder.HasKey(u => u.Id);
 
+        builder.Property(c => c.Id)
+            .HasColumnName("Id")
+            .IsRequired();
+
+        builder.Property(u => u.Nome)
+            .HasColumnName("Nome")
+            .IsRequired()
+            .HasMaxLength(100);
+
         builder.Property(u => u.Email)
+            .HasColumnName("Email")
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(u => u.Senha)
+            .HasColumnName("Senha")
             .IsRequired()
             .HasMaxLength(255);
 
         builder.Property(u => u.Perfil)
+            .HasColumnName("Perfil")
             .IsRequired()
             .HasConversion<int>();
 

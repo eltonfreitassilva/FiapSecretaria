@@ -5,22 +5,24 @@ namespace FIAP.Secretaria.Domain.Entities;
 
 public class Usuario : Entity
 {
+    protected Usuario() { }
+
+    public string Nome { get; private set; }
     public string Email { get; private set; }
     public string Senha { get; private set; }
     public PerfilUsuario Perfil { get; private set; }
-
-    protected Usuario() { }
-
-    public Usuario(string email, string senhaHash, PerfilUsuario perfil)
+    
+    public static class Factory
     {
-        Email = email;
-        Senha = senhaHash;
-        Perfil = perfil;
-    }
-
-    public void Atualizar(string email, PerfilUsuario perfil)
-    {
-        Email = email;
-        Perfil = perfil;
+        public static Usuario Criar(string nome, string email, string senhaHash, PerfilUsuario perfil)
+        {
+            return new Usuario
+            {
+                Nome = nome,
+                Email = email,
+                Senha = senhaHash,
+                Perfil = perfil
+            };
+        }
     }
 }

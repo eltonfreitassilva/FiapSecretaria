@@ -87,6 +87,14 @@ public class Result
         return this;
     }
 
+    public virtual Result SetMessage(string message)
+    {
+        Message = message ?? string.Empty;
+
+        return this;
+    }
+
+
     /// <summary>
     /// Configura este result com as informações desejadas.
     /// </summary>

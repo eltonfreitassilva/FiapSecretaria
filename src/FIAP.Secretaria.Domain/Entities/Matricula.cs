@@ -9,7 +9,7 @@ public class Matricula : Entity
     public int AlunoId { get; private set; }
     public int TurmaId { get; private set; }
     public DateTime DataMatricula { get; private set; }
-
+    
     public virtual Aluno Aluno { get; private set; }
     public virtual Turma Turma { get; private set; }
 

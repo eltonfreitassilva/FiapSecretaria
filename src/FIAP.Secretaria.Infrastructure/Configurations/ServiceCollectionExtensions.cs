@@ -10,6 +10,7 @@ using FIAP.Secretaria.Domain.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using FIAP.Secretaria.Infrastructure.Security;
+using FIAP.Secretaria.Infrastructure.Services;
 
 namespace FIAP.Secretaria.Infrastructure.Configurations;
 
@@ -26,6 +27,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITurmaRepository, TurmaRepository>();
         services.AddScoped<IMatriculaRepository, MatriculaRepository>();
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+        //Services
+
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IPasswordHasher, PasswordHasher>();
+
 
         // Configurações
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));

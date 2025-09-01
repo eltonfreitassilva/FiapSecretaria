@@ -12,13 +12,26 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
 
         builder.HasKey(t => t.Id);
 
+        builder.Property(c => c.Id)
+            .HasColumnName("Id")
+            .IsRequired();
+
         builder.Property(t => t.Nome)
+            .HasColumnName("Nome")
             .IsRequired()
             .HasMaxLength(100);
 
         builder.Property(t => t.Descricao)
+            .HasColumnName("Descricao")
             .IsRequired()
             .HasMaxLength(255);
+
+        builder.Property(m => m.DataCriacao)
+            .HasColumnName("DataCriacao")
+            .IsRequired();
+
+        builder.Property(m => m.DataAlteracao)
+            .HasColumnName("DataAlteracao");
 
         builder.HasMany(t => t.Matriculas)
             .WithOne(m => m.Turma)
