@@ -7,9 +7,17 @@ public class Turma : Entity
     public string Nome { get; protected set; }
     public string Descricao { get; protected set; }
     public DateTime DataCriacao { get; private set; }
-    public DateTime DataAlteracao { get; private set; }
+    public DateTime? DataAlteracao { get; private set; }
 
     public virtual ICollection<Matricula> Matriculas { get; protected set; }
+
+    public void Atualizar(string nome, string descricao)
+    {
+        Nome = nome;
+        Descricao = descricao;
+        DataAlteracao = DateTime.Now;
+        DataAlteracao = null;
+    }
 
     public static class Factory
     {

@@ -1,13 +1,13 @@
-﻿using FIAP.Secretaria.Application.Commands;
-using FIAP.Secretaria.Shared.Common.Results;
+﻿using FIAP.Secretaria.Shared.Common.Results;
 using FIAP.Secretaria.Shared.Common.Models;
 using MediatR;
 using FIAP.Secretaria.Domain.Interfaces.Repositories;
 using FIAP.Secretaria.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using FIAP.Secretaria.Shared.Common.Validators;
+using FIAP.Secretaria.Application.Commands.Acesso;
 
-namespace FIAP.Secretaria.Application.CommandsHandlers;
+namespace FIAP.Secretaria.Application.CommandsHandlers.Acesso;
 
 public class LoginCommandHandler : IRequestHandler<LoginCommand, Result<LoginResponseModel>>
 {

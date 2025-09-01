@@ -24,5 +24,5 @@ public class DataFilter<T> : IDataFilter<T> where T : IEntity
     public Expression<Func<T, object>> SortColumn { get; set; }
     public SortDirection SortDirection { get; set; } = SortDirection.Ascending;
     public Expression<Func<T, bool>> Predicate { get; set; }
-    public Expression<Func<T, object>> Include { get; set; }
+    public List<Expression<Func<T, object>>> Includes { get; set; } = new List<Expression<Func<T, object>>>();
 }

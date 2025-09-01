@@ -49,6 +49,14 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : Entity
         IQueryable<T> query = _context.Set<T>()
             .AsQueryable();
 
+        if (filters.Includes != null && filters.Includes.Any())
+        {
+            foreach (var include in filters.Includes)
+            {
+                query = query.Include(include);
+            }
+        }
+
         if (filters.Predicate != null)
             query = query.Where(filters.Predicate);
 
@@ -71,6 +79,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : Entity
             .ToListAsync();
 
         recordsCount = data?.FirstOrDefault()?.RecordsCount ?? query.Count();
+
         items = data?.Select(x => x.Record).ToList();
 
         return await Task.FromResult(new PagedList<T>(items, filters.PageIndex, recordsCount, filters.PageSize));

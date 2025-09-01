@@ -3,8 +3,9 @@ using FIAP.Secretaria.Domain.Interfaces.Repositories;
 using FIAP.Secretaria.Shared.Common.Results;
 using Microsoft.EntityFrameworkCore;
 using FIAP.Secretaria.Shared.Common.Validators;
+using FIAP.Secretaria.Application.Commands.Alunos;
 
-namespace FIAP.Secretaria.Application.Commands.Alunos;
+namespace FIAP.Secretaria.Application.CommandsHandlers.Alunos;
 
 public class EditarAlunoCommandHandler : IRequestHandler<EditarAlunoCommand, Result<bool>>
 {
@@ -31,7 +32,7 @@ public class EditarAlunoCommandHandler : IRequestHandler<EditarAlunoCommand, Res
             {
                 var alunoExistente = await _alunoRepository
                      .AsQueryable()
-                     .Where(a => (a.Cpf == command.Cpf || a.Email == command.Email ) && a.Id != command.Id)
+                     .Where(a => (a.Cpf == command.Cpf || a.Email == command.Email) && a.Id != command.Id)
                      .Select(a => new { a.Cpf, a.Email })
                      .FirstOrDefaultAsync(cancellationToken);
 

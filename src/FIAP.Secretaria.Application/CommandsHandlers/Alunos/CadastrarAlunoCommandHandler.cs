@@ -6,7 +6,7 @@ using FIAP.Secretaria.Shared.Utils.Helpers;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace FIAP.Secretaria.Application.CommandsHandlers;
+namespace FIAP.Secretaria.Application.CommandsHandlers.Alunos;
 
 public class CadastrarAlunoCommandHandler : IRequestHandler<CadastrarAlunoCommand, Result<bool>>
 {
@@ -38,7 +38,7 @@ public class CadastrarAlunoCommandHandler : IRequestHandler<CadastrarAlunoComman
                      .Where(a => a.Cpf == command.Cpf || a.Email == command.Email)
                      .Select(a => new { a.Cpf, a.Email })
                      .FirstOrDefaultAsync(cancellationToken);
-             
+
                 Validations.IsNotNull(alunoExistente?.Cpf, result, "Cpf", "Já existe um aluno cadastrado com o CPF informado.");
                 Validations.IsNotNull(alunoExistente?.Email, result, "Email", "Já existe um aluno cadastrado com o e-mail informado.");
 

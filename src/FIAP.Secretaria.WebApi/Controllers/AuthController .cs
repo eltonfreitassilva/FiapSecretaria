@@ -1,4 +1,4 @@
-﻿using FIAP.Secretaria.Application.Commands;
+﻿using FIAP.Secretaria.Application.Commands.Acesso;
 using FIAP.Secretaria.Shared.Common.Models;
 using FIAP.Secretaria.Shared.Common.Results;
 using MediatR;

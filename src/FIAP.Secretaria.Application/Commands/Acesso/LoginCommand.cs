@@ -4,7 +4,7 @@ using FIAP.Secretaria.Shared.Common.Results;
 using FluentValidation;
 using MediatR;
 
-namespace FIAP.Secretaria.Application.Commands;
+namespace FIAP.Secretaria.Application.Commands.Acesso;
 
 public class LoginCommand : Command, IRequest<Result<LoginResponseModel>>
 {

@@ -1,5 +1,7 @@
-﻿namespace FIAP.Secretaria.Domain.Interfaces.Repositories;
+﻿using FIAP.Secretaria.Domain.Entities;
 
-public interface IMatriculaRepository
+namespace FIAP.Secretaria.Domain.Interfaces.Repositories;
+
+public interface IMatriculaRepository : IBaseRepository<Matricula>
 {
 }

@@ -12,5 +12,5 @@ public interface IDataFilter<T> where T : IEntity
     Expression<Func<T, object>> SortColumn { get; set; }
     SortDirection SortDirection { get; set; }
     Expression<Func<T, bool>> Predicate { get; set; }
-    Expression<Func<T, object>> Include { get; set; }
+    List<Expression<Func<T, object>>> Includes { get; set; }
 }

@@ -12,17 +12,19 @@ public class AlunoDto
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
 
-    public static implicit operator AlunoDto(Aluno entity)
+    public static implicit operator AlunoDto(Aluno aluno)
     {
+        if (aluno == null) return null;
+
         return new AlunoDto
         {
-            Id = entity.Id,
-            Nome = entity.Nome,
-            DataNascimento = entity.DataNascimento,
-            Cpf = entity.Cpf,
-            Email = entity.Email,
-            DataCriacao = entity.DataCriacao,
-            DataAlteracao = entity?.DataAlteracao
+            Id = aluno.Id,
+            Nome = aluno.Nome,
+            DataNascimento = aluno.DataNascimento,
+            Cpf = aluno.Cpf,
+            Email = aluno.Email,
+            DataCriacao = aluno.DataCriacao,
+            DataAlteracao = aluno?.DataAlteracao
         };
     }
 }

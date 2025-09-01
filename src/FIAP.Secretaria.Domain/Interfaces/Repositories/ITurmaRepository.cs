@@ -1,5 +1,7 @@
-﻿namespace FIAP.Secretaria.Domain.Interfaces.Repositories;
+﻿using FIAP.Secretaria.Domain.Entities;
 
-public interface ITurmaRepository
+namespace FIAP.Secretaria.Domain.Interfaces.Repositories;
+
+public interface ITurmaRepository : IBaseRepository<Turma>
 {
 }

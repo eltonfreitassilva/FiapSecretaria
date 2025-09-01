@@ -4,11 +4,11 @@ using FIAP.Secretaria.Shared.Common.Results;
 using FIAP.Secretaria.Shared.Utils.Pagination;
 using FluentValidation;
 
-namespace FIAP.Secretaria.Application.Filters;
+namespace FIAP.Secretaria.Application.Filters.Alunos;
 
 public class ConsultarAlunosFilter : Filter, IQueryFilter<Result<IPagedList<AlunoDto>>>
 {
-    public int Id { get; set; }
+    public int? Id { get; set; } = null;
 
     public override bool IsValid()
     {
