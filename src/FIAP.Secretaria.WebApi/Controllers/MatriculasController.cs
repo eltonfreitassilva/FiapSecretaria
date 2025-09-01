@@ -85,7 +85,7 @@ namespace FIAP.Secretaria.WebApi.Controllers
             return GetIActionResult(result);
         }
 
-        [HttpGet("aluno/{alunoId:int}")]
+        [HttpGet("alunos/{alunoId:int}")]
         [SwaggerOperation(summary: "Listar matrículas por aluno", description: "Permite listar matrículas de um aluno específico.")]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Result<IPagedList<MatriculaDto>>))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(Result<bool>))]
@@ -112,7 +112,7 @@ namespace FIAP.Secretaria.WebApi.Controllers
             return GetIActionResult(result);
         }
 
-        [HttpGet("turma/{turmaId:int}")]
+        [HttpGet("turmas/{turmaId:int}")]
         [SwaggerOperation(summary: "Listar matrículas por turma", description: "Permite listar matrículas de uma turma específica.")]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Result<IPagedList<MatriculaDto>>))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(Result<IPagedList<MatriculaDto>>))]
@@ -139,7 +139,7 @@ namespace FIAP.Secretaria.WebApi.Controllers
             return GetIActionResult(result);
         }
 
-        [HttpGet("aluno/{alunoId:int}/turma/{turmaId:int}")]
+        [HttpGet("alunos/{alunoId:int}/turmas/{turmaId:int}")]
         [SwaggerOperation(summary: "Verificar matrícula", description: "Verifica se um aluno está matriculado em uma turma específica.")]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Result<IPagedList<MatriculaDto>>))]
         [SwaggerResponse((int)HttpStatusCode.BadRequest, Type = typeof(Result<IPagedList<MatriculaDto>>))]

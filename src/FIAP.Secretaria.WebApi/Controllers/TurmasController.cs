@@ -92,7 +92,7 @@ namespace FIAP.Secretaria.WebApi.Controllers
         }
 
         [HttpGet("{idTurma:int}/Alunos")]
-        [SwaggerOperation(summary: "Listar turmas e seus alunos", description: "Permite listar turmas e seus alunos.")]
+        [SwaggerOperation(summary: "Listar alunos da turma", description: "Permite listar alunos da turma.")]
         [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(Result<Result<IPagedList<AlunoTurmaDto>>>))]
         public async Task<IActionResult> ListarTurmasESeusAlunos([FromRoute] int idTurma, [FromQuery] PaginationFilter paginacao)
         {
