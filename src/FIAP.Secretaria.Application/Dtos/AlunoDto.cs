@@ -11,6 +11,7 @@ public class AlunoDto
     public string Email { get; set; } 
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
+    public bool Ativo { get; set; }
 
     public static implicit operator AlunoDto(Aluno aluno)
     {
@@ -24,7 +25,8 @@ public class AlunoDto
             Cpf = aluno.Cpf,
             Email = aluno.Email,
             DataCriacao = aluno.DataCriacao,
-            DataAlteracao = aluno?.DataAlteracao
+            DataAlteracao = aluno?.DataAlteracao,
+            Ativo = aluno.Ativo
         };
     }
 }

@@ -10,6 +10,7 @@ public class TurmaDto
     public DateTime DataCriacao { get; set; }
     public DateTime? DataAlteracao { get; set; }
     public int QuantidadeAlunos { get; set; }
+    public bool Ativa { get; set; }
 
     public static implicit operator TurmaDto(Turma turma)
     {
@@ -22,7 +23,8 @@ public class TurmaDto
             Descricao = turma.Descricao,
             DataCriacao = turma.DataCriacao,
             DataAlteracao = turma.DataAlteracao,
-            QuantidadeAlunos = turma.Matriculas?.Count ?? 0
+            QuantidadeAlunos = turma.Matriculas?.Count ?? 0,
+            Ativa = turma.Ativo
         };
     }
 }

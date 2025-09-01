@@ -31,12 +31,12 @@ public class CadastrarMatriculaCommandHandler : IRequestHandler<CadastrarMatricu
         if (result.IsValid)
         {
             var aluno = await _alunoRepository.AsQueryable()
-                .Where(x => x.Id == command.AlunoId).FirstOrDefaultAsync();
+                .Where(x => x.Id == command.AlunoId && x.Ativo == true).FirstOrDefaultAsync();
 
             Validations.IsNull(aluno, result, "Aluno", "Aluno não encontrado.");
 
             var turma = await _turmaRepository.AsQueryable()
-                .Where(x => x.Id == command.TurmaId).FirstOrDefaultAsync();
+                .Where(x => x.Id == command.TurmaId && x.Ativo == true).FirstOrDefaultAsync();
 
             Validations.IsNull(turma, result, "Turma", "Turma não encontrada.");
 

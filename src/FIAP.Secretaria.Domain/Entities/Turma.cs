@@ -8,6 +8,7 @@ public class Turma : Entity
     public string Descricao { get; protected set; }
     public DateTime DataCriacao { get; private set; }
     public DateTime? DataAlteracao { get; private set; }
+    public bool Ativo { get; private set; } = true;
 
     public virtual ICollection<Matricula> Matriculas { get; protected set; }
 
@@ -19,6 +20,11 @@ public class Turma : Entity
         DataAlteracao = null;
     }
 
+    public void Deletar()
+    {
+        Ativo = false;
+        DataAlteracao = DateTime.Now;
+    }
     public static class Factory
     {
         public static Turma Criar(string nome, string descricao)

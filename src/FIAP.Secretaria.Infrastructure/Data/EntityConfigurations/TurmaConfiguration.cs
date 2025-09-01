@@ -33,6 +33,10 @@ public class TurmaConfiguration : IEntityTypeConfiguration<Turma>
         builder.Property(m => m.DataAlteracao)
             .HasColumnName("DataAlteracao");
 
+        builder.Property(m => m.Ativo)
+            .HasColumnName("Ativo")
+            .IsRequired();
+
         builder.HasMany(t => t.Matriculas)
             .WithOne(m => m.Turma)
             .HasForeignKey(m => m.TurmaId)

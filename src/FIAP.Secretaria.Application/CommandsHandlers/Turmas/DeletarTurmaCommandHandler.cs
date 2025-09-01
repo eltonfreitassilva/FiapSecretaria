@@ -25,31 +25,18 @@ public class DeletarTurmaCommandHandler : IRequestHandler<DeletarTurmaCommand, R
         if (result.IsValid)
         {
             var turma = await _turmaRepository.AsQueryable()
-                .Where(x => x.Id == command.Id).FirstOrDefaultAsync();
+                .Where(x => x.Id == command.Id && x.Ativo == true).FirstOrDefaultAsync();
 
             Validations.IsNull(turma, result, "Turma", "Turma não encontrada.");
 
             if (result.IsValid)
             {
-                var possuiMatriculas = await _turmaRepository
-                    .AsQueryable()
-                    .AsNoTracking()
-                    .Include(t => t.Matriculas)
-                    .Where(t => t.Id == command.Id)
-                    .SelectMany(t => t.Matriculas)
-                    .AnyAsync(cancellationToken);
+                turma.Deletar();
 
-                Validations.IsTrue(possuiMatriculas, result, "Turma", "Não é possível excluir uma turma que possui matrículas.");
+                await _turmaRepository.UnitOfWork.CommitAsync();
 
-                if (result.IsValid)
-                {
-                    _turmaRepository.Delete(turma);
-
-                    await _turmaRepository.UnitOfWork.CommitAsync();
-
-                    result.Data = true;
-                    result.SetMessage("Turma excluída com sucesso.");
-                }
+                result.Data = true;
+                result.SetMessage("Turma excluída com sucesso.");
             }
         }
 

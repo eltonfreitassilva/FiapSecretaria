@@ -10,6 +10,7 @@ public class AlunoTurmaDto
     public string CpfAluno { get; set; }
     public DateTime DataNascimentoAluno { get; set; }
     public DateTime DataMatricula { get; set; }
+    public bool Ativo { get; set; }
 
     public static implicit operator AlunoTurmaDto(Matricula matricula)
     {
@@ -23,7 +24,8 @@ public class AlunoTurmaDto
             EmailAluno = matricula.Aluno.Email,
             CpfAluno = matricula.Aluno.Cpf,
             DataNascimentoAluno = matricula.Aluno.DataNascimento,
-            DataMatricula = matricula.DataMatricula
+            DataMatricula = matricula.DataMatricula,
+            Ativo = matricula.Aluno.Ativo
         };
     }
 }

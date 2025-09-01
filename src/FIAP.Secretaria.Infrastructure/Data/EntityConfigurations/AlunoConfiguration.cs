@@ -44,6 +44,10 @@ public class AlunoConfiguration : IEntityTypeConfiguration<Aluno>
         builder.Property(m => m.DataAlteracao)
         .HasColumnName("DataAlteracao");
 
+        builder.Property(m => m.Ativo)
+            .HasColumnName("Ativo")
+            .IsRequired();
+
         builder.HasIndex(a => a.Cpf)
             .IsUnique();
 

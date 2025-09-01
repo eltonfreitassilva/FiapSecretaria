@@ -13,6 +13,7 @@ public class Aluno : Entity
     public string Senha { get; private set; }
     public DateTime DataCriacao { get; private set; }
     public DateTime? DataAlteracao { get; private set; }
+    public bool Ativo { get; private set; } = true;
 
     public virtual ICollection<Matricula> Matriculas { get; private set; }
 
@@ -22,6 +23,12 @@ public class Aluno : Entity
         DataNascimento = dataNascimento;
         Cpf = cpf;
         Email = email;
+        DataAlteracao = DateTime.Now;
+    }
+
+    public void Deletar()
+    {
+        Ativo = false;
         DataAlteracao = DateTime.Now;
     }
 

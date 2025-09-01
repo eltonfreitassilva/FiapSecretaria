@@ -22,13 +22,13 @@ public class DeletarAlunoCommandHandler : IRequestHandler<DeletarAlunoCommand, R
         if (result.IsValid)
         {
             var aluno = await _alunoRepository.AsQueryable()
-            .Where(x => x.Id == command.Id).FirstOrDefaultAsync();
+            .Where(x => x.Id == command.Id && x.Ativo == true).FirstOrDefaultAsync();
 
             Validations.IsNull(aluno, result, "Aluno", "Aluno não encontrado");
 
             if (result.IsValid)
             {
-                _alunoRepository.Delete(aluno);
+                aluno.Deletar();
 
                 await _alunoRepository.UnitOfWork.CommitAsync();
 

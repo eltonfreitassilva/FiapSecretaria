@@ -82,7 +82,8 @@ public class ConsultarTurmasQuery : IConsultarTurmasQuery
 
             (filter.Id == null || c.Id == filter.Id) &&
             (string.IsNullOrEmpty(filter.Nome) || c.Nome.Contains(filter.Nome)) &&
-            (string.IsNullOrEmpty(filter.Descricao) || c.Descricao.Contains(filter.Descricao))
+            (string.IsNullOrEmpty(filter.Descricao) || c.Descricao.Contains(filter.Descricao)) &&
+            (filter.Ativas == null || c.Ativo == filter.Ativas)
 
         ;
 
